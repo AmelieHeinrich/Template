@@ -11,7 +11,7 @@ void GameState::Init(StateMachine* machine)
 
 void GameState::Update(float dt)
 {
-    std::cout << dt << std::endl;
+    
 }
 
 void GameState::Render(sf::RenderTarget& target)
