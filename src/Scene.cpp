@@ -21,9 +21,12 @@ Entity& Scene::CreateEntity()
 void Scene::Update(float dt)
 {
     mTransformSystem.Update(mRegistry, dt, mEntities.size());
+    mColliderSystem.Update(mRegistry, mEntities.size());
 }
 
 void Scene::Render(sf::RenderTarget& target)
 {
+    mColliderSystem.Draw(mRegistry, mEntities.size(), target);
     mCircleSystem.Update(mRegistry, mEntities.size(), target);
+    mRectangleSystem.Update(mRegistry, mEntities.size(), target);
 }

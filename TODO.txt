@@ -1,6 +1,6 @@
 # TODO LIST
 
-- Make ECS (Transform 2D, Collider, CircleComponent, QuadComponent, SpriteComponent)
+- Make ECS (Transform 2D, Collider, CircleComponent, RectangleComponent)
 - Make paddle
 - Make ball
 - Make bricks

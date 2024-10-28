@@ -24,4 +24,6 @@ private:
     Registry mRegistry;
     TransformSystem mTransformSystem;
     CircleSystem mCircleSystem;
+    RectangleSystem mRectangleSystem;
+    BoxColliderSystem mColliderSystem;
 };

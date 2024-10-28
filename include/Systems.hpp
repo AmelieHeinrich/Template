@@ -21,3 +21,22 @@ public:
 
     void Update(Registry& reg, std::uint64_t maxEntity, sf::RenderTarget& target);
 };
+
+class RectangleSystem
+{
+public:
+    RectangleSystem() = default;
+    ~RectangleSystem() = default;
+
+    void Update(Registry& reg, std::uint64_t maxEntity, sf::RenderTarget& target);
+};
+
+class BoxColliderSystem
+{
+public:
+    BoxColliderSystem() = default;
+    ~BoxColliderSystem() = default;
+
+    void Update(Registry& reg, std::uint64_t maxEntity);
+    void Draw(Registry& reg, std::uint64_t maxEntity, sf::RenderTarget& target);
+};

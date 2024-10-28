@@ -16,5 +16,8 @@ public:
 
 private:
     Scene mScene;
+    sf::Vector2i mBounds;
+
     Entity mBall;
+    Entity mPaddle;
 };

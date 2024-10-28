@@ -5,7 +5,7 @@
 
 int main()
 {
-    Window window(1280, 720, "Template");
+    Window window(800, 600, "Template");
 
     StateMachine machine(window.GetTarget());
     machine.SetStartupState<GameState>();

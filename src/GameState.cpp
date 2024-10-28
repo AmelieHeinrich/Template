@@ -8,32 +8,83 @@ void GameState::Init(StateMachine* machine)
 {
     mMachine = machine;
 
-    mBall = mScene.CreateEntity();
+    // Setup paddle
+    {
+        mPaddle = mScene.CreateEntity();
 
-    Transform2D& transform = mBall.GetTransform();
-    transform.Position = sf::Vector2f(0, 0);
-    transform.Scale = sf::Vector2f(1.0f, 1.0f);
+        RectangleComponent& box = mPaddle.AddRectangleComponent();
+        box.FillColor = sf::Color::White;
+        box.Size = sf::Vector2f(100.0f, 10.0f);
 
-    CircleComponent& circle = mBall.AddCircleComponent();
-    circle.FillColor = sf::Color::White;
-    circle.Radius = 10.0f;
+        Transform2D& transform = mPaddle.GetTransform();
+        transform.Position = sf::Vector2f(350.0f, 550.0f);
+        transform.Scale = sf::Vector2f(1.0f, 1.0f);
+   
+        BoxColliderComponent& collider = mPaddle.GetBoxColliderComponent();
+        collider.Size = box.Size;
+        collider.OnCollide = [](const BoxColliderComponent& other) {};
+    }
+
+    // Setup ball
+    {
+        mBall = mScene.CreateEntity();
+
+        CircleComponent& circle = mBall.AddCircleComponent();
+        circle.FillColor = sf::Color::Green;
+        circle.Radius = 10.0f;
+
+        Transform2D& transform = mBall.GetTransform();
+        transform.Position = sf::Vector2f(390.0f, 290.0f);
+        transform.Scale = sf::Vector2f(1.0f, 1.0f);
+        transform.Velocity = sf::Vector2f(100.0f, 100.0f);
+
+        BoxColliderComponent& collider = mBall.GetBoxColliderComponent();
+        collider.Size = sf::Vector2f(20.0f, 20.0f);
+        collider.OnCollide = [this](const BoxColliderComponent& other) {
+            std::cout << "Ball collide" << std::endl;
+
+            Transform2D& transform = mBall.GetTransform();
+            transform.Velocity.x = -transform.Velocity.x;
+            transform.Velocity.y = -transform.Velocity.y;
+        };
+    }
 }
 
 void GameState::Update(float dt)
 {
-    Transform2D& transform = mBall.GetTransform();
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        transform.Velocity.x -= 1000.0 * dt;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        transform.Velocity.x += 1000.0 * dt;
+    // paddle update
+    {
+        Transform2D& transform = mPaddle.GetTransform();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+            transform.Position.x -= 1000.0 * dt;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+            transform.Position.x += 1000.0 * dt;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+            transform.Position.y -= 1000.0 * dt;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+            transform.Position.y += 1000.0 * dt;
+    }
+
+    // ball update
+    {
+        Transform2D& transform = mBall.GetTransform();
+        CircleComponent& circle = mBall.GetCircleComponent();
+
+        if (transform.Position.x >= mBounds.x - circle.Radius) transform.Velocity.x = -transform.Velocity.x;
+        if (transform.Position.x <= circle.Radius) transform.Velocity.x = -transform.Velocity.x;
+        if (transform.Position.y >= mBounds.y - circle.Radius) transform.Velocity.y = -transform.Velocity.y;
+        if (transform.Position.y <= circle.Radius) transform.Velocity.y = -transform.Velocity.y;
+    }
 
     mScene.Update(dt);
 
-    transform.Velocity = sf::Vector2f(0.0f, 0.0f);
+    //transform.Velocity = sf::Vector2f(0.0f, 0.0f);
 }
 
 void GameState::Render(sf::RenderTarget& target)
 {
+    mBounds = sf::Vector2i(target.getSize());
+
     target.clear();
     mScene.Render(target);
 }

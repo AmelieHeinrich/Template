@@ -18,6 +18,12 @@ public:
 
     CircleComponent& AddCircleComponent();
     CircleComponent& GetCircleComponent();
+
+    RectangleComponent& AddRectangleComponent();
+    RectangleComponent& GetRectangleComponent();
+
+    BoxColliderComponent& AddBoxColliderComponent();
+    BoxColliderComponent& GetBoxColliderComponent();
 private:
     friend class Scene;
     friend class Registry;
