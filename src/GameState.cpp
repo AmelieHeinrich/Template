@@ -41,17 +41,17 @@ void GameState::Init(StateMachine* machine)
         BoxColliderComponent& collider = mBall.GetBoxColliderComponent();
         collider.Size = sf::Vector2f(20.0f, 20.0f);
         collider.OnCollide = [this](const BoxColliderComponent& other) {
-            std::cout << "Ball collide" << std::endl;
-
             Transform2D& transform = mBall.GetTransform();
-            transform.Velocity.x = -transform.Velocity.x;
-            transform.Velocity.y = -transform.Velocity.y;
+            transform.Velocity = -transform.Velocity;
+            transform.Position += transform.Velocity.x < 0 ? sf::Vector2f(-5.0f, -5.0f) : sf::Vector2f(5.0f, 5.0f);
         };
     }
 }
 
 void GameState::Update(float dt)
 {
+    mScene.Update(dt);
+
     // paddle update
     {
         Transform2D& transform = mPaddle.GetTransform();
@@ -75,10 +75,6 @@ void GameState::Update(float dt)
         if (transform.Position.y >= mBounds.y - circle.Radius) transform.Velocity.y = -transform.Velocity.y;
         if (transform.Position.y <= circle.Radius) transform.Velocity.y = -transform.Velocity.y;
     }
-
-    mScene.Update(dt);
-
-    //transform.Velocity = sf::Vector2f(0.0f, 0.0f);
 }
 
 void GameState::Render(sf::RenderTarget& target)
