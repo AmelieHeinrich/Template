@@ -16,7 +16,7 @@ public:
     void Close();
     void Present();
 
-    sf::RenderTarget& GetTarget() { return static_cast<sf::RenderTarget&>(mWindow); }
+    sf::RenderWindow& GetTarget() { return static_cast<sf::RenderWindow&>(mWindow); }
 private:
     sf::RenderWindow mWindow;
 };

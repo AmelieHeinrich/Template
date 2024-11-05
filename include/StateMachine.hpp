@@ -18,7 +18,7 @@ public:
 
     virtual void Init(StateMachine* machine) = 0;
     virtual void Update(float dt) = 0;
-    virtual void Render(sf::RenderTarget& target) = 0;
+    virtual void Render(sf::RenderWindow& target) = 0;
     virtual void Input(sf::Event event) = 0;
 
 protected:
@@ -28,7 +28,7 @@ protected:
 class StateMachine
 {
 public:
-    StateMachine(sf::RenderTarget& window);
+    StateMachine(sf::RenderWindow& window);
     ~StateMachine();
 
     void Update();
@@ -51,7 +51,7 @@ public:
     }
 private:
     std::shared_ptr<State> mCurrentState;
-    sf::RenderTarget& mWindow;
+    sf::RenderWindow& mWindow;
     sf::Clock mDTClock;
     sf::Time mLast;
 };

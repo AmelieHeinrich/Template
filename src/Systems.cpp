@@ -15,7 +15,7 @@ void TransformSystem::Update(Registry& reg, float dt, std::uint64_t maxEntity)
     }
 }
 
-void CircleSystem::Update(Registry& reg, std::uint64_t maxEntity, sf::RenderTarget& target)
+void CircleSystem::Update(Registry& reg, std::uint64_t maxEntity, sf::RenderWindow& target)
 {
     for (int e = 0; e < maxEntity; e++) {
         if (reg.Circles.count(e) > 0 && reg.Transforms.count(e) > 0) {
@@ -29,7 +29,7 @@ void CircleSystem::Update(Registry& reg, std::uint64_t maxEntity, sf::RenderTarg
     }
 }
 
-void RectangleSystem::Update(Registry& reg, std::uint64_t maxEntity, sf::RenderTarget& target)
+void RectangleSystem::Update(Registry& reg, std::uint64_t maxEntity, sf::RenderWindow& target)
 {
     for (int e = 0; e < maxEntity; e++) {
         if (reg.Rectangles.count(e) > 0 && reg.Transforms.count(e) > 0) {
@@ -76,7 +76,7 @@ void BoxColliderSystem::Update(Registry& reg, std::uint64_t maxEntity)
     }
 }
 
-void BoxColliderSystem::Draw(Registry& reg, std::uint64_t maxEntity, sf::RenderTarget& target)
+void BoxColliderSystem::Draw(Registry& reg, std::uint64_t maxEntity, sf::RenderWindow& target)
 {
     for (int e = 0; e < maxEntity; e++) {
         if (reg.BoxColliders.count(e) > 0 && reg.Transforms.count(e) > 0) {

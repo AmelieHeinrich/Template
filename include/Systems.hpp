@@ -19,7 +19,7 @@ public:
     CircleSystem() = default;
     ~CircleSystem() = default;
 
-    void Update(Registry& reg, std::uint64_t maxEntity, sf::RenderTarget& target);
+    void Update(Registry& reg, std::uint64_t maxEntity, sf::RenderWindow& target);
 };
 
 class RectangleSystem
@@ -28,7 +28,7 @@ public:
     RectangleSystem() = default;
     ~RectangleSystem() = default;
 
-    void Update(Registry& reg, std::uint64_t maxEntity, sf::RenderTarget& target);
+    void Update(Registry& reg, std::uint64_t maxEntity, sf::RenderWindow& target);
 };
 
 class BoxColliderSystem
@@ -38,5 +38,5 @@ public:
     ~BoxColliderSystem() = default;
 
     void Update(Registry& reg, std::uint64_t maxEntity);
-    void Draw(Registry& reg, std::uint64_t maxEntity, sf::RenderTarget& target);
+    void Draw(Registry& reg, std::uint64_t maxEntity, sf::RenderWindow& target);
 };

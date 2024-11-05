@@ -24,7 +24,7 @@ void Scene::Update(float dt)
     mColliderSystem.Update(mRegistry, mEntities.size());
 }
 
-void Scene::Render(sf::RenderTarget& target)
+void Scene::Render(sf::RenderWindow& target)
 {
     mColliderSystem.Draw(mRegistry, mEntities.size(), target);
     mCircleSystem.Update(mRegistry, mEntities.size(), target);

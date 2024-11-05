@@ -2,7 +2,7 @@
 
 #include "StateMachine.hpp"
 
-StateMachine::StateMachine(sf::RenderTarget& window)
+StateMachine::StateMachine(sf::RenderWindow& window)
     : mWindow(window)
 {
 }

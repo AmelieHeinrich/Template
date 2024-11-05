@@ -42,8 +42,8 @@ void GameState::Init(StateMachine* machine)
         collider.Size = sf::Vector2f(20.0f, 20.0f);
         collider.OnCollide = [this](const BoxColliderComponent& other) {
             Transform2D& transform = mBall.GetTransform();
-            transform.Velocity = -transform.Velocity;
-            transform.Position += transform.Velocity.x < 0 ? sf::Vector2f(-5.0f, -5.0f) : sf::Vector2f(5.0f, 5.0f);
+            transform.Velocity.y = -transform.Velocity.y;
+            transform.Position += transform.Velocity.y < 0 ? sf::Vector2f(-1.0f, -1.0f) : sf::Vector2f(1.0f, 1.0f);
         };
     }
 }
@@ -77,9 +77,9 @@ void GameState::Update(float dt)
     }
 }
 
-void GameState::Render(sf::RenderTarget& target)
+void GameState::Render(sf::RenderWindow& target)
 {
-    mBounds = sf::Vector2i(target.getSize());
+    mBounds = sf::Vector2u(target.getSize());
 
     target.clear();
     mScene.Render(target);

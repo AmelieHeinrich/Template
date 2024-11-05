@@ -17,7 +17,7 @@ public:
     Entity& CreateEntity();
 
     void Update(float dt);
-    void Render(sf::RenderTarget& target);
+    void Render(sf::RenderWindow& target);
 private:
     std::vector<Entity> mEntities;
 

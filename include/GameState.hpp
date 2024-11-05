@@ -11,12 +11,12 @@ public:
 
     void Init(StateMachine* machine) override;
     void Update(float dt) override;
-    void Render(sf::RenderTarget& target) override;
+    void Render(sf::RenderWindow& target) override;
     void Input(sf::Event event) override;
 
 private:
     Scene mScene;
-    sf::Vector2i mBounds;
+    sf::Vector2u mBounds;
 
     Entity mBall;
     Entity mPaddle;
