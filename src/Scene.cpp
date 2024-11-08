@@ -18,6 +18,16 @@ Entity& Scene::CreateEntity()
     return mEntities.back();
 }
 
+void Scene::DestroyEntity(const Entity& e)
+{
+    for (size_t i = 0; i < mEntities.size(); i++) {
+        if (mEntities[i].mID == e.mID) {
+            mEntities.erase(mEntities.begin() + i);
+            break;
+        } 
+    }
+}
+
 void Scene::Update(float dt)
 {
     mTransformSystem.Update(mRegistry, dt, mEntities.size());

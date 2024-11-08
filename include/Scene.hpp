@@ -15,6 +15,7 @@ public:
     ~Scene();
 
     Entity& CreateEntity();
+    void DestroyEntity(const Entity& e);
 
     void Update(float dt);
     void Render(sf::RenderWindow& target);

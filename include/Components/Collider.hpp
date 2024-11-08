@@ -10,5 +10,5 @@ struct BoxColliderComponent
     sf::RectangleShape Shape;
     sf::Vector2f Size;
 
-    std::function<void(const BoxColliderComponent& other)> OnCollide;
+    std::function<bool(const BoxColliderComponent& other)> OnCollide;
 };

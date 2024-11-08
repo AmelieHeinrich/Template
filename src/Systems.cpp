@@ -45,13 +45,16 @@ void RectangleSystem::Update(Registry& reg, std::uint64_t maxEntity, sf::RenderW
 
 void BoxColliderSystem::Update(Registry& reg, std::uint64_t maxEntity)
 {
+    // Create a list of entities to destroy after the collision checks
+    std::vector<int> entitiesToDestroy;
+
     for (int ex = 0; ex < maxEntity; ex++) {
         if (reg.BoxColliders.count(ex) > 0 && reg.Transforms.count(ex) > 0) {
             for (int ey = 0; ey < maxEntity; ey++) {
                 if (reg.BoxColliders.count(ey) > 0 && reg.Transforms.count(ey) > 0) {
-                    if (ex == ey)
-                        continue;
+                    if (ex == ey) continue;
 
+                    // Get the shapes for each collider for debugging (optional)
                     sf::RectangleShape& leftShape = reg.BoxColliders[ex].Shape;
                     leftShape.setOutlineColor(sf::Color::Red);
                     leftShape.setOutlineThickness(1.0f);
@@ -66,13 +69,29 @@ void BoxColliderSystem::Update(Registry& reg, std::uint64_t maxEntity)
                     rightShape.setScale(reg.Transforms[ey].Scale);
                     rightShape.setSize(reg.BoxColliders[ey].Size);
 
+                    // Check for collision between the two shapes
                     if (leftShape.getGlobalBounds().intersects(rightShape.getGlobalBounds())) {
-                        reg.BoxColliders[ex].OnCollide(reg.BoxColliders[ey]);
-                        reg.BoxColliders[ey].OnCollide(reg.BoxColliders[ex]);
+                        // Perform the collision action for both entities
+                        if (reg.BoxColliders[ex].OnCollide(reg.BoxColliders[ey]))
+                            entitiesToDestroy.push_back(ex);
+                        if (reg.BoxColliders[ey].OnCollide(reg.BoxColliders[ex]))
+                            entitiesToDestroy.push_back(ey);
                     }
                 }
             }
         }
+    }
+
+    // Destroy the entities outside of the loop
+    for (int entityId : entitiesToDestroy) {
+        if (reg.BoxColliders.count(entityId) > 0) {
+            reg.BoxColliders.erase(entityId);  // Remove the collider
+        }
+        if (reg.Transforms.count(entityId) > 0) {
+            reg.Transforms.erase(entityId);  // Remove the transform
+        }
+        // Optionally, remove other components related to this entity
+        // reg.OtherComponents.erase(entityId);
     }
 }
 
